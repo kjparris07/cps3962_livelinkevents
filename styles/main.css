@@ -1,0 +1,140 @@
+/* applies to every element */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* elements by type */
+header {
+    background-color: #f2eaa0;
+    padding: 15px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+header h2 {
+    font-family: "Playfair Display", serif;
+    font-weight: 900;
+    font-size: 36px;
+    line-height: 36px;
+    margin-left: 20px;
+}
+
+header h2 a {
+    color: black;
+}
+
+body {
+    width: 100vw;
+    background: #f2eaa0;
+    background: linear-gradient(90deg, rgba(242, 234, 160, 1) 0%, rgba(242, 182, 240, 1) 93%);
+    font-family: "Open Sans", sans-serif;
+}
+
+h1 {
+    margin-top: 20px;
+    color: #e81798;
+    font-size: 40px;
+    text-align: center;
+    font-family: "Climate Crisis", sans-serif;
+}
+
+input {
+    width: 224px;
+    font-size: 18px;
+    padding: 5px;
+    line-height: 24px;
+    border-radius: 50px;
+    border: 0 solid #fff;
+    text-align: center;
+    margin-top: 10px;
+}
+
+a {
+    text-decoration: none;
+}
+
+button {
+    background-color: #e81798;
+    color: #fff;
+    border: 0;
+    transition: background 250ms;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: black;
+}
+
+button a {
+    color: #fff;
+    font-weight: bold;
+}
+
+/* elements by class or id */
+
+#headerButton {
+    padding: 0 20px;
+    margin: 0 20px 0 0;
+    line-height: 40px;
+    border-radius: 15px;
+    font-family: "Open Sans", sans-serif;
+}
+
+#search {
+    margin: 20px 0 15px 10vw;
+}
+
+.container {
+    margin: 10px auto;
+    width: 80vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.container > * {
+    text-align: center;
+    justify-self: center;
+    margin: 0 auto;
+}
+
+.bigButton {
+    background-color: #e81798;
+    color: #fff;
+    font-size: 30px;
+    display: block;
+    margin: 50px auto;
+    width: fit-content;
+    padding: 10px 20px;
+    border-radius: 50px;
+    transition: background 250ms;
+}
+
+.bigButton a {
+    color: #fff;
+}
+
+.bigButton:hover {
+    background-color: black;
+}
+
+.babyButton {
+    margin-left: 10px;
+    background-color: #e81798;
+    color: #fff;
+    border: 0;
+    border-radius: 50px;
+    height: 34px;
+    width: 34px;
+    font-weight: bolder;
+    transition: background 250ms;
+}
+
+.babyButton a {
+    color: #fff;
+}
+
+.babyButton:hover {
+    background-color: black;
+}
