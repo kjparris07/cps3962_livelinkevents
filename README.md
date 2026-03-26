@@ -82,8 +82,6 @@ git push origin feature
 
 --- 
 
- 
-
 ### Merge locally 
 
  git checkout main  
