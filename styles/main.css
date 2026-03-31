@@ -134,7 +134,7 @@ input {
   background-color: black;
 }
 
-/* small round search buttons */
+/* small round buttons */
 .babyButton {
   width: 34px;
   height: 34px;
@@ -155,7 +155,7 @@ input {
   background-color: black;
 }
 
-/* premium membership section wrapper */
+/* premium section wrapper */
 .premium-box-wrapper {
   width: 100%;
   margin-top: 25px;
@@ -174,7 +174,7 @@ input {
   border-radius: 8px;
 }
 
-/* remove normal big button pill style when inside premium box */
+/* remove normal pill styling inside premium box */
 .premium-box .bigButton {
   width: auto;
   margin: 0 auto;
@@ -193,7 +193,8 @@ input {
   background-color: transparent;
 }
 
-/* shimmer premium text */
+/* shimmer text block */
+.premium-box .bigButton,
 .premium-box .bigButton a {
   display: inline-block;
   font-family: Arial, Helvetica, sans-serif;
@@ -211,19 +212,21 @@ input {
     #0b4a92 100%
   );
   background-size: 250% auto;
+  background-clip: text;
   -webkit-background-clip: text;
+  color: transparent;
   -webkit-text-fill-color: transparent;
   text-shadow: 0 0 8px rgba(70, 184, 255, 0.35);
   animation: shimmer 3.5s linear infinite;
 }
 
-/* premium box subtle glow on hover */
+/* glow on box hover */
 .premium-box:hover {
   box-shadow: 0 0 18px rgba(70, 184, 255, 0.25);
   transition: box-shadow 250ms ease;
 }
 
-/* optional class if used somewhere else */
+/* optional reusable membership text class */
 .membership-btn {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 24px;
@@ -233,7 +236,6 @@ input {
   color: #0b4a92;
 }
 
-/* shimmer animation */
 @keyframes shimmer {
   0% {
     background-position: 0% center;
