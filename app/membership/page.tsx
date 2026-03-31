@@ -1,7 +1,4 @@
-import "../../styles/main.css";
-import "../../styles/membership.css";
-
-export default function Home() {
+export default function MembershipPage() {
   return (
     <main>
       <div className="container">
