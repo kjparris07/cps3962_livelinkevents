@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { BigButton } from "./globalComponents/BigButton";
+import BigButton from "./globalComponents/BigButton";
 import "../styles/main.css";
 
 export default function Home() {
