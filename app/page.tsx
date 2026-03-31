@@ -28,24 +28,20 @@ export default function Home() {
     <div className="homepage">
       <div className="page">
 
-        {/* Top bar */}
         <div className="top-bar">
           <a href="/" className="logo">
-            LiveLink Events<span></span>
+            LiveLink Events
           </a>
 
           <a href="/login" className="auth-btn">
-            <span className="auth-btn-icon"></span>
-            Sign in/Log in
+            Sign in / Log in
           </a>
         </div>
 
-        {/* Main heading */}
         <div className="hero-text">
           YOUR NEXT CONCERT EXPERIENCE <br /> STARTS HERE...
         </div>
 
-        {/* Search box */}
         <div className="search-box">
           <div className="search-title">Search by:</div>
 
@@ -86,7 +82,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Search button */}
         <div className="search">
           <button className="search button" onClick={handleSearch}>
             Search
@@ -99,7 +94,6 @@ export default function Home() {
           </a>
         </div>
 
-        {/* CTA */}
         <div className="cta">
           <a href="/membership">
             <button className="cta-btn">

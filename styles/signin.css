@@ -1,212 +1,94 @@
 * {
-        /* Global reset and font setting [THIS WORKS FINE] */
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-        font-family: Arial, Helvetica, sans-serif;
-  }
-
-    /* Page background and layout [THIS WORKS FINE] */
-    body {
-      min-height: 100vh;
-      background: linear-gradient(90deg, #fff7ad, #ffa9f9);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    /* Page container [THIS WORKS FINE] */ 
-    .page {
-      width: 100%;
-      max-width: 450px;
-      padding: 40px 60px 60px;
-      text-align: center;
-    }
-
-    /* Top bar [THIS WORKS FINE]*/
-    .top-bar {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 80px;
-      padding: 15px 10px;
-      background: #ffefb4; 
-      border-radius: 0px;
-      filter : drop-shadow(0 4px 10px rgba(0, 0, 0, 0.1));
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: 1000;
-    }
-
-    /* Logo text [THIS WORKS FINE] */
-    .logo {
-      font-size: 30px;
-      font-weight: 700;
-      background: linear-gradient(90deg, #8c52ff, #ff914d);
-      -webkit-background-clip: text;
-      color: transparent;
-      font-style: oblique;
-      font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    }
-
-    /* SignIn title [THIS WORKS FINE] */
-    .signin-title {
-        font-size: 36px;
-        font-weight: 800;
-        color: #ff1fa9;
-        margin-bottom: 10px;
-        letter-spacing: 1px;
-        margin-top: 100px;
-    }
-
-    /* Required field note [THIS WORKS FINE] */
-    .required-note {
-        font-size: 14px;
-        color: #ff1fa9;
-        margin-bottom: 30px;
-    }
-
-    /* Input fields [THIS WORKS FINE] */
-    .input-group {
-        text-align: left;
-        margin-bottom: 40px;
-    }
-
-    /* Input label styling [THIS WORKS FINE] */
-    .input-label {
-        font-size: 16px;
-        font-weight: 500;
-        color: #131314;
-        margin-bottom: 6px;
-    }
-
-    /* Input box styling [THIS WORKS FINE] */
-    .input-box {
-        width: 100%;
-        padding: 12px 14px;
-        border-radius: 120px;
-        border: none;
-        background: #ffffff;
-        font-size: 15px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-
-    /* Create Account Styling [THIS WORKS FINE] */
-    .cta-btn {
-      display: inline-block;
-      background: #ff1fa9;
-      color: #ffffff;
-      padding: 14px 28px;
-      border-radius: 999px;
-      font-weight: 700;
-      font-size: 14px;
-      border: none;
-      cursor: pointer;
-      box-shadow: 0 8px 18px rgba(232, 67, 147, 0.4);
-      max-width: 520px;
-      margin-bottom: 50px;
-    }
-
-    /* Footer text [THIS WORKS FINE] */
-    .footer-text {
-        margin-top: 10px;
-        font-size: 15px;
-        color: #000000;
-    }
-
-    /* Log In link styling [THIS WORKS FINE] */
-    .footer-text span {
-        font-weight: 700;
-        text-decoration: underline;
-        cursor: pointer;
-    }
-
-    .signin-container{
-    text-align: center;
-    width: fit-content;
-    max-width: 450px;
-    padding: 40px 60px 60px;
-    margin: 0 auto;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
- /* Title */
+.signin-page {
+  min-height: 100vh;
+  background: linear-gradient(90deg, #fff7ad, #ffa9f9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.signin-container {
+  width: 100%;
+  max-width: 450px;
+  padding: 40px 60px 60px;
+  text-align: center;
+}
+
+.top-bar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 80px;
+  padding: 15px 10px;
+  background: #ffefb4;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.logo {
+  font-size: 30px;
+  font-weight: 700;
+  background: linear-gradient(90deg, #8c52ff, #ff914d);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
 .signin-title {
   font-size: 36px;
   font-weight: 800;
   color: #ff1fa9;
   margin-bottom: 10px;
-  letter-spacing: 1px;
   margin-top: 100px;
-  text-align:center;
 }
 
-/* LogIn Tittle */
-.login-title {
-        font-size: 36px;
-        font-weight: 800;
-        color: #ff1fa9;
-        margin-bottom: 10px;
-        letter-spacing: 1px;
-        margin-top: 100px;
-        text-align: center;
-    }
-
-/* Required note */
 .required-note {
-font-size: 14px;
-color: #ff1fa9;
-margin-bottom: 30px;
-text-align:center;
+  font-size: 14px;
+  color: #ff1fa9;
+  margin-bottom: 30px;
 }
 
-/* Input group wrapper */
 .input-group {
-margin-bottom:40px;
+  text-align: left;
+  margin-bottom: 40px;
 }
 
-/* Label */
 .input-label {
-font-size: 16px;
-font-weight: 500;
-color: #131314;
-margin-bottom: 6px;
+  font-size: 16px;
+  margin-bottom: 6px;
 }
 
-/* Input box styling */
 .input-box {
   width: 100%;
   padding: 12px 14px;
   border-radius: 120px;
   border: none;
   background: #ffffff;
-  font-size: 15px;
-  max-width: 300px;  
 }
 
-/* Input hover + focus */
-.input-box:focus {
-  border-color: #ff914d;
-  box-shadow: 0 0 8px rgba(255, 145, 77, 0.5);
-}
-
-/* Footer text */
-.footer-text {
-  font-weight: 600;
-  text-decoration: none;
+.cta-btn {
+  background: #ff1fa9;
+  color: white;
+  padding: 14px 28px;
+  border-radius: 999px;
+  border: none;
   cursor: pointer;
-  text-align:center;
 }
 
-/* Footer link */
+.footer-text {
+  margin-top: 20px;
+}
+
 .footer-link {
   color: #ff1fa9;
   text-decoration: underline;
   cursor: pointer;
-  text-align:center;
-}
-
-.footer-link:hover {
-  color: #ff914d;
 }

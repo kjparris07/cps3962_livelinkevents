@@ -1,52 +1,70 @@
-/*  [ALL THIS WORKS FINE] */
-
-import Layout from "../globalComponents/Layout";
-
 export default function MembershipPage() {
   return (
-    <Layout>
+    <main className="membership-page">
+      <section className="membership-wrapper">
+        <h1 className="membership-title">Join Our Membership</h1>
+        <p className="membership-subtitle">
+          Welcome to our exclusive membership program. Choose the plan that fits
+          your event experience best and enjoy access to special perks, early
+          ticket opportunities, and member-only benefits.
+        </p>
 
-      {/* Membership heading */}
-      <div className="hero-text" style={{ marginTop: "140px" }}>
-        UPGRADE YOUR EXPERIENCE AND<br /> BECOME A MEMBER TODAY!
-      </div>
+        <div className="plans-row">
+          <div className="plan-card premium-plan">
+            <h2>Premium</h2>
+            <p className="plan-description">
+              Our Premium membership is designed for members who want extra
+              value, early access, and priority event updates.
+            </p>
+            <ul className="plan-features">
+              <li>Early access to select tickets</li>
+              <li>Member-only discounts</li>
+              <li>Priority event updates</li>
+              <li>Exclusive promotional offers</li>
+            </ul>
+            <div className="plan-price">$9.99 / month</div>
+            <a href="/login" className="plan-button">
+              Choose Premium
+            </a>
+          </div>
 
-      {/* White background box */}
-      <div
-        style={{
-          background: "#ffffffcc",
-          padding: "30px",
-          borderRadius: "10px",
-          maxWidth: "700px",
-          margin: "40px auto",
-          boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-          fontSize: "18px",
-          lineHeight: "1.6",
-          color: "#2d3436",
-          marginTop: "60px",
-        }}
-      >
-        <p><strong>Members enjoy:</strong></p>
-        <ul style={{ marginTop: "10px" }}>
-          <li>Higher-quality seats that offer closeness to the stage, a better view, and extra comfort.</li>
-        <li>Early notifications.</li>
-        <li>Enhanced alerts, including price drop.</li>
-        <li>Exclusive deals on tickets and artist merchandise.</li>
-        <li>Priority access to tickets for high-demand events. </li>
-        <li>Exclusive access to members-only events, such as pre-sales, meet-and-greets, and special performances.</li>
-        <li>Early access to tickets before general sale starts.</li>
-        </ul>
-      </div>
+          <div className="plan-card elite-plan">
+            <h2>Elite</h2>
+            <p className="plan-description">
+              Elite membership is for users who want the highest level of
+              benefits and the most complete LiveLink experience.
+            </p>
+            <ul className="plan-features">
+              <li>Everything in Premium</li>
+              <li>Top priority event access</li>
+              <li>Exclusive VIP announcements</li>
+              <li>Special featured event perks</li>
+            </ul>
+            <div className="plan-price">$19.99 / month</div>
+            <a href="/login" className="plan-button">
+              Choose Elite
+            </a>
+          </div>
+        </div>
 
-      {/* CTA button → redirects to payment */}
-      <div className="cta">
-        <a href="/payment">
-          <button className="cta-btn">
-            Become a Member Now
-          </button>
-        </a>
-      </div>
+        <div className="divider-line"></div>
 
-    </Layout>
+        <div className="basic-plan-card">
+          <h2>Basic Free Membership</h2>
+          <p>
+            Our Basic membership gives you access to general site features,
+            standard event browsing, and account access at no cost.
+          </p>
+          <ul className="plan-features basic-features">
+            <li>Browse available events</li>
+            <li>Create and manage an account</li>
+            <li>Receive standard updates</li>
+          </ul>
+          <a href="/login" className="basic-plan-button">
+            Join Our Free Membership
+          </a>
+        </div>
+      </section>
+    </main>
   );
 }
