@@ -36,7 +36,7 @@ export default function Home() {
             link={"/events"}
           />
           <BigButton
-            content={"Become a member today and don't miss on discounts!"}
+            content={"Unlock Premium Access"}
             link={"/membership"}
           />
           
