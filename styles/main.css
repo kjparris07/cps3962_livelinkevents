@@ -2,7 +2,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 
 body {
@@ -39,16 +39,32 @@ body {
   font-weight: 700;
   background: linear-gradient(90deg, #8c52ff, #ff914d);
   -webkit-background-clip: text;
+  background-clip: text;
   color: transparent;
   text-decoration: none;
 }
 
 .auth-btn {
   padding: 10px 20px;
+  border: none;
   border-radius: 999px;
   background-color: #ffffffcc;
   color: #000;
   text-decoration: none;
+}
+
+.auth-btn:hover {
+  background-color: #ff1fa9;
+  transition: background-color 0.5s ease;
+}
+
+.auth-btn a {
+  color: black;
+  text-decoration: none;
+}
+
+.auth-btn:hover a {
+  color: white;
 }
 
 .hero-text {
@@ -57,6 +73,7 @@ body {
   font-weight: 800;
   color: #ff1fa9;
   margin-top: 100px;
+  font-family: "Climate Crisis", sans-serif;
 }
 
 .search-box {
@@ -93,6 +110,12 @@ body {
   margin: 5px;
 }
 
+.search button:hover {
+  background: black;
+  transition: background-color 0.5s ease;
+  cursor: pointer;
+}
+
 .cta {
   margin-top: 80px;
   text-align: center;
@@ -105,3 +128,10 @@ body {
   border-radius: 999px;
   border: none;
 }
+
+.cta-btn:hover {
+  background: black;
+  transition: background-color 0.5s ease;
+  cursor: pointer;
+}
+

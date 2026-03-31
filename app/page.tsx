@@ -28,16 +28,6 @@ export default function Home() {
     <div className="homepage">
       <div className="page">
 
-        <div className="top-bar">
-          <a href="/" className="logo">
-            LiveLink Events
-          </a>
-
-          <a href="/login" className="auth-btn">
-            Sign in / Log in
-          </a>
-        </div>
-
         <div className="hero-text">
           YOUR NEXT CONCERT EXPERIENCE <br /> STARTS HERE...
         </div>
@@ -52,7 +42,7 @@ export default function Home() {
               <input
                 className="field-input"
                 type="text"
-                placeholder="Enter city or Zip Code"
+                placeholder="Enter City or Zip Code"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
               />
@@ -73,7 +63,7 @@ export default function Home() {
               <input
                 className="field-input"
                 type="text"
-                placeholder="Enter artist name"
+                placeholder="Enter Artist Name"
                 value={artist}
                 onChange={(e) => setArtist(e.target.value)}
               />

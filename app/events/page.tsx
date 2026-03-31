@@ -1,5 +1,6 @@
 import { events } from "@/lib/events";
 import Link from "next/link";
+import "../../styles/main.css";
 
 export default function EventsPage({ searchParams }) {
   const { location, date, artist } = searchParams;
