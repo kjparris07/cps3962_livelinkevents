@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import "../styles/main.css";
 import "../styles/membership.css";
+import "../styles/login.css";
 
 async function HeaderButton() {
   const cookieStore = await cookies();
