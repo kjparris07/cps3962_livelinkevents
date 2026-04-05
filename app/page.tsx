@@ -1,28 +1,18 @@
-"use client";
+import { query } from '@/lib/db';
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+export async function DBConnection() {
+  const result = await query('SELECT * FROM users');
+  const users = result.rows;
+  return (
+    <ul>
+      {users.map((user) => (
+        <li key={user.id}>{user.email}</li>
+      ))}
+    </ul>
+  );
+}
 
 export default function Home() {
-  const router = useRouter();
-
-  const [location, setLocation] = useState("");
-  const [date, setDate] = useState("");
-  const [artist, setArtist] = useState("");
-
-  const handleSearch = () => {
-    if (!location && !date && !artist) {
-      alert("No events entered, please try again.");
-      return;
-    }
-
-    const params = new URLSearchParams();
-    if (location) params.set("location", location);
-    if (date) params.set("date", date);
-    if (artist) params.set("artist", artist);
-
-    router.push(`/events?${params.toString()}`);
-  };
 
   return (
     <div className="homepage">
@@ -31,7 +21,6 @@ export default function Home() {
         <div className="hero-text">
           YOUR NEXT CONCERT EXPERIENCE <br /> STARTS HERE...
         </div>
-
         <div className="search-box">
           <div className="search-title">Search by:</div>
 
@@ -43,8 +32,6 @@ export default function Home() {
                 className="field-input"
                 type="text"
                 placeholder="Enter City or Zip Code"
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
               />
             </div>
 
@@ -53,8 +40,7 @@ export default function Home() {
               <input
                 className="field-input"
                 type="date"
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
+                
               />
             </div>
 
@@ -64,8 +50,6 @@ export default function Home() {
                 className="field-input"
                 type="text"
                 placeholder="Enter Artist Name"
-                value={artist}
-                onChange={(e) => setArtist(e.target.value)}
               />
             </div>
 
@@ -73,7 +57,7 @@ export default function Home() {
         </div>
 
         <div className="search">
-          <button className="search button" onClick={handleSearch}>
+          <button className="search button">
             Search
           </button>
 
@@ -83,6 +67,8 @@ export default function Home() {
             </button>
           </a>
         </div>
+
+        <DBConnection />
 
         <div className="cta">
           <a href="/membership">
