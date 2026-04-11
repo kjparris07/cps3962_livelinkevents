@@ -1,5 +1,5 @@
-import "../../styles/main.css";
-import "../../styles/account.css";
+import '@/styles/main.css';
+import "@/styles/account.css";
 
 export default function Home() {
   return (

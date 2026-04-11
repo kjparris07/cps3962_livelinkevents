@@ -3,8 +3,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { getAllEvents } from '@/app/actions';
 import { Results } from "../globalComponents/Results";
-import "../../styles/main.css";
-import "../../styles/events.css";
+import "@/styles/main.css";
+import "@/styles/events.css";
 
 export default function EventsPage() {
   const [ results, setResults ] = useState<any[]>([]);

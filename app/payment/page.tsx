@@ -1,7 +1,5 @@
 /* PAYMENT PAGE */
 
-import Layout from "../globalComponents/Layout";
-
 export default function PaymentPage() {
   return (
     <main>
