@@ -1,40 +1,48 @@
 import Link from "next/link";
-import "../../../../styles/main.css";
-import "../../../../styles/login.css";
+import "../../../styles/main.css";
+import "../../../styles/login.css";
 
-export default function EditOrganizer() {
+export default function OrganizerAccount() {
   return (
     <main className="login-page">
       <div className="top-bar">
-        <Link href="/" className="logo">LiveLink Events</Link>
+        <Link href="/" className="logo">
+          LiveLink Events
+        </Link>
       </div>
 
       <div className="login-container">
-        <h1 className="login-title">EDIT ORGANIZER ACCOUNT</h1>
+        <h1 className="login-title">ORGANIZER ACCOUNT</h1>
 
         <div className="input-group">
           <label className="input-label">Organizer Name</label>
-          <input className="input-box" placeholder="Enter organizer name" />
+          <input className="input-box" value="LiveLink Org" readOnly />
         </div>
 
         <div className="input-group">
           <label className="input-label">Email</label>
-          <input className="input-box" placeholder="Enter email" />
+          <input className="input-box" value="organizer@email.com" readOnly />
         </div>
 
         <div className="input-group">
           <label className="input-label">Username</label>
-          <input className="input-box" placeholder="Enter username" />
+          <input className="input-box" value="organizer123" readOnly />
         </div>
 
-        <div className="input-group">
-          <label className="input-label">New Password</label>
-          <input className="input-box" type="password" placeholder="Enter new password" />
-        </div>
+        <div
+          className="cta"
+          style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}
+        >
+          <Link href="/account/organizer/edit" className="view-events-btn">
+            Edit
+          </Link>
 
-        <div className="cta">
-          <Link href="/account/organizer" className="view-events-btn">
-            Save Changes
+          <Link href="/account/organizer/delete" className="view-events-btn">
+            Delete
+          </Link>
+
+          <Link href="/login" className="view-events-btn">
+            Logout
           </Link>
         </div>
       </div>

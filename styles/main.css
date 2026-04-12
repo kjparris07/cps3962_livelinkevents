@@ -2,17 +2,6 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-<<<<<<< HEAD
-  font-family: "Open Sans", sans-serif;
-}
-
-body {
-  min-height: 100vh;
-  background: linear-gradient(90deg, #fff7ad, #ffa9f9);
-  display: flex;
-  justify-content: center;
-=======
-  box-sizing: border-box;
 }
 
 body {
@@ -30,85 +19,18 @@ body {
   width: 100%;
   padding: 16px 32px;
   display: flex;
->>>>>>> deli
   align-items: center;
   justify-content: space-between;
-
   position: sticky;
   top: 0;
   z-index: 1000;
-
   background: linear-gradient(
     90deg,
     rgba(242, 234, 160, 0.72) 0%,
     rgba(242, 182, 240, 0.42) 100%
   );
-
   border-bottom: 1px solid rgba(255, 255, 255, 0.35);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-
-<<<<<<< HEAD
-.page {
-  width: 100%;
-  max-width: 1200px;
-  padding: 40px 60px 60px;
-  position: relative;
-}
-
-.top-bar {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 80px;
-  padding: 15px 10px;
-  background: #ffefb4;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1000;
-}
-
-.logo {
-  font-size: 30px;
-  font-weight: 700;
-  background: linear-gradient(90deg, #8c52ff, #ff914d);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  text-decoration: none;
-}
-
-.auth-btn {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 999px;
-  background-color: #ffffffcc;
-  color: #000;
-  text-decoration: none;
-  margin-left: 15px;
-}
-
-.auth-btn:hover {
-  background-color: #ff1fa9;
-  transition: background-color 0.5s ease;
-  cursor: pointer;
-}
-
-.auth-btn a {
-  color: black;
-  text-decoration: none;
-}
-
-.auth-btn:hover a {
-  color: white;
-}
-
-.hero-text {
-=======
-.avatar-hover {
-  margin-left: auto;
 }
 
 .logo,
@@ -133,6 +55,7 @@ body {
 }
 
 .avatar-hover {
+  margin-left: auto;
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -145,7 +68,7 @@ body {
   height: 38px;
   border-radius: 50%;
   background: #ff1fa9;
-  color: white;   /* ✅ make icon white */
+  color: white;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -173,15 +96,11 @@ body {
 }
 
 #tagline {
-  margin-top: 26px;
-  color: #e81798;
-  font-size: 58px;
->>>>>>> deli
   text-align: center;
-  font-size: 36px;
+  font-size: 58px;
   font-weight: 800;
   color: #ff1fa9;
-  margin-top: 100px;
+  margin-top: 80px;
   font-family: "Climate Crisis", sans-serif;
   line-height: 1.05;
   max-width: 900px;
@@ -200,7 +119,8 @@ a {
   text-decoration: none;
 }
 
-input {
+input,
+select {
   width: 270px;
   margin-top: 10px;
   padding: 12px 18px;
@@ -248,6 +168,7 @@ input {
   margin-top: 8px;
   background-color: #e81798;
   color: #ffffff;
+  border: none;
   border-radius: 50%;
   font-weight: 900;
   font-size: 16px;
@@ -256,6 +177,7 @@ input {
   align-items: center;
   justify-content: center;
   text-decoration: none;
+  cursor: pointer;
   transition: background 250ms ease, transform 250ms ease;
 }
 
@@ -269,18 +191,15 @@ input {
   width: 86vw;
   margin: 34px auto 40px;
   display: flex;
-  flex-direction: column;   /* 🔥 THIS stacks them */
-  align-items: flex-start;  /* keeps them left aligned */
-  gap: 20px;                /* space between buttons */
-}
-
-.premium-box {
-  width: fit-content;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
 }
 
 .view-events-btn,
 .view-events-btn:link,
 .view-events-btn:visited {
+  width: 320px;
   display: inline-block;
   background-color: #ff1fa9;
   color: #ffffff;
@@ -288,6 +207,7 @@ input {
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 1px;
+  text-align: center;
   padding: 12px 22px;
   border-radius: 18px;
   border: 3px solid #ff8ad8;
@@ -303,7 +223,7 @@ input {
 .premium-box,
 .premium-box:link,
 .premium-box:visited {
-  width: 360px;
+  width: 320px;
   padding: 16px 18px;
   text-align: center;
   text-decoration: none;

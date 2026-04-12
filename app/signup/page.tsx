@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import "../../styles/login.css";
+import "../../styles/signin.css";
 
 export default function SignupPage() {
   const [fullName, setFullName] = useState("");
@@ -32,12 +32,16 @@ export default function SignupPage() {
     }
 
     if (!usernameRegex.test(username)) {
-      setError("Username must be 3 to 15 characters and can only use letters, numbers, or underscores.");
+      setError(
+        "Username must be 3 to 15 characters and can only use letters, numbers, or underscores."
+      );
       return;
     }
 
     if (!passwordRegex.test(password)) {
-      setError("Password must be at least 8 characters and include at least one letter and one number.");
+      setError(
+        "Password must be at least 8 characters and include at least one letter and one number."
+      );
       return;
     }
 
@@ -55,15 +59,15 @@ export default function SignupPage() {
   };
 
   return (
-    <main className="login-page">
-      <div className="login-container">
+    <main className="signin-page">
+      <div className="signin-container">
         <div className="top-bar">
           <Link href="/" className="logo">
             LiveLink Events
           </Link>
         </div>
 
-        <div className="login-title">SIGN UP</div>
+        <div className="signin-title">SIGN UP</div>
         <div className="required-note">* Indicates required field</div>
 
         <div className="input-group">
@@ -131,12 +135,7 @@ export default function SignupPage() {
           />
         </div>
 
-        {error && (
-          <p style={{ color: "red", marginBottom: "15px" }}>
-            {error}
-          </p>
-        )}
-
+        {error && <p style={{ color: "red", marginBottom: "15px" }}>{error}</p>}
         {successMessage && (
           <p style={{ color: "green", marginBottom: "15px" }}>
             {successMessage}
@@ -144,7 +143,7 @@ export default function SignupPage() {
         )}
 
         <div className="cta">
-          <button className="cta-btn" onClick={handleSubmit}>
+          <button type="button" className="cta-btn" onClick={handleSubmit}>
             Create Account
           </button>
         </div>
@@ -152,15 +151,9 @@ export default function SignupPage() {
         <div className="footer-text">
           Already have an account?
           <br />
-<<<<<<< HEAD
-          <a href="/login" className="footer-link">
-            Log In
-          </a>
-=======
           <Link href="/login">
             <span>Log In</span>
           </Link>
->>>>>>> deli
         </div>
       </div>
     </main>

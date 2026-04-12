@@ -19,6 +19,6 @@ export default function EventsPage() {
       <div className="container">
         <h1>ALL EVENTS</h1>
       </div>
-    </div>
+    </main>
   );
 }
