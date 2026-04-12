@@ -9,17 +9,9 @@ import { Results } from './globalComponents/Results';
 
 import "../styles/main.css";
 
-type ArtistFormData = {
-  artist: string;
-};
-
-type StateFormData = {
-  state: string;
-};
-
-type DateFormData = {
-  date: string;
-};
+type ArtistFormData = { artist: string };
+type StateFormData = { state: string };
+type DateFormData = { date: string };
 
 export default function Home() {
   const { register, handleSubmit } = useForm<any>();
@@ -27,38 +19,21 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
 
-  const onArtistSubmit: SubmitHandler<ArtistFormData> = async (data) => {
+  const handleSearch = async (type: string, data: any) => {
     setLoading(true);
     setHasSearched(true);
 
     const fd = new FormData();
-    fd.append("artist", data.artist);
+    Object.entries(data).forEach(([key, value]) => {
+      fd.append(key, value as string);
+    });
 
-    const events = await searchArtists(fd);
-    setResults(events);
-    setLoading(false);
-  };
+    let events = [];
 
-  const onStateSubmit: SubmitHandler<StateFormData> = async (data) => {
-    setLoading(true);
-    setHasSearched(true);
+    if (type === "artist") events = await searchArtists(fd);
+    if (type === "state") events = await searchStates(fd);
+    if (type === "date") events = await searchDates(fd);
 
-    const fd = new FormData();
-    fd.append("state", data.state);
-
-    const events = await searchStates(fd);
-    setResults(events);
-    setLoading(false);
-  };
-
-  const onDateSubmit: SubmitHandler<DateFormData> = async (data) => {
-    setLoading(true);
-    setHasSearched(true);
-
-    const fd = new FormData();
-    fd.append("date", data.date);
-
-    const events = await searchDates(fd);
     setResults(events);
     setLoading(false);
   };
@@ -66,9 +41,7 @@ export default function Home() {
   return (
     <main>
       <div className="top-bar">
-        <Link href="/" className="logo">
-          LiveLink Events
-        </Link>
+        <Link href="/" className="logo">LiveLink Events</Link>
 
         <Link href="/login" className="avatar-hover">
           <span className="avatar-circle">👤</span>
@@ -85,45 +58,30 @@ export default function Home() {
       <h2 id="search">Search by:</h2>
 
       <div className="container">
-        <form onSubmit={handleSubmit(onStateSubmit)} className="search-card">
-          <label>
-            <h3>Location</h3>
-          </label>
+
+        <form onSubmit={handleSubmit((d) => handleSearch("state", d))} className="search-card">
+          <h3>Location</h3>
           <select {...register("state")} className="input-box">
             <option value="">Select a state</option>
             <option value="NJ">New Jersey</option>
             <option value="NY">New York</option>
             <option value="CA">California</option>
           </select>
-          <button className="babyButton" type="submit">
-            {loading ? "..." : ">"}
-          </button>
+          <button className="babyButton">{loading ? "..." : ">"}</button>
         </form>
 
-        <form onSubmit={handleSubmit(onDateSubmit)} className="search-card">
-          <label>
-            <h3>Date</h3>
-          </label>
+        <form onSubmit={handleSubmit((d) => handleSearch("date", d))} className="search-card">
+          <h3>Date</h3>
           <input type="date" {...register("date")} className="input-box" />
-          <button className="babyButton" type="submit">
-            {loading ? "..." : ">"}
-          </button>
+          <button className="babyButton">{loading ? "..." : ">"}</button>
         </form>
 
-        <form onSubmit={handleSubmit(onArtistSubmit)} className="search-card">
-          <label>
-            <h3>Artist</h3>
-          </label>
-          <input
-            type="text"
-            placeholder="Artist"
-            {...register("artist")}
-            className="input-box"
-          />
-          <button className="babyButton" type="submit">
-            {loading ? "..." : ">"}
-          </button>
+        <form onSubmit={handleSubmit((d) => handleSearch("artist", d))} className="search-card">
+          <h3>Artist</h3>
+          <input {...register("artist")} className="input-box" placeholder="Artist" />
+          <button className="babyButton">{loading ? "..." : ">"}</button>
         </form>
+
       </div>
 
       {hasSearched && (

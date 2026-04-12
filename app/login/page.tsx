@@ -2,40 +2,52 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { useCookies } from "react-cookie";
 import { useRouter } from "next/navigation";
-import { logIn } from "../actions";
-
 import "../../styles/signin.css";
 
-type SignInFormData = {
-  email: string;
-  password: string;
-};
-
-export default function LoginPage() {
+export default function SignInPage() {
   const router = useRouter();
-  const [, setCookie] = useCookies(["email"]);
-  const [loading, setLoading] = useState(false);
-  const { register, handleSubmit } = useForm<SignInFormData>();
 
-  const onSubmit = async (data: SignInFormData) => {
+  const [emailOrUsername, setEmailOrUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSignIn = () => {
+    setError("");
     setLoading(true);
 
-    const fd = new FormData();
-    Object.entries(data).forEach(([key, value]) => {
-      fd.append(key, value);
-    });
+    const savedUser = localStorage.getItem("livelinkUser");
 
-    const result = await logIn(fd);
-
-    if (result?.success) {
-      setCookie("email", data.email);
-      router.push("/account/organizer");
+    if (!savedUser) {
+      setError("No account found. Please sign up first.");
+      setLoading(false);
+      return;
     }
 
+    const parsedUser = JSON.parse(savedUser);
+
+    const matchesUser =
+      emailOrUsername === parsedUser.email ||
+      emailOrUsername === parsedUser.username;
+
+    const matchesPassword = password === parsedUser.password;
+
+    if (!matchesUser || !matchesPassword) {
+      setError("Invalid email/username or password.");
+      setLoading(false);
+      return;
+    }
+
+    // ✅ SAVE LOGIN STATE
+    localStorage.setItem("isLoggedIn", "true");
+    localStorage.setItem("loggedInUsername", parsedUser.username);
+    localStorage.setItem("loggedInEmail", parsedUser.email);
+
     setLoading(false);
+
+    // ✅ REDIRECT AFTER LOGIN
+    router.push("/account/customer");
   };
 
   return (
@@ -47,49 +59,59 @@ export default function LoginPage() {
           </Link>
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="signin-title">LOG IN</div>
-          <div className="required-note">* Indicates required field</div>
+        <div className="signin-title">SIGN IN</div>
+        <div className="required-note">* Indicates required field</div>
 
-          <div className="input-group">
-            <label className="input-label" htmlFor="email">
-              Email*
-            </label>
-            <input
-              id="email"
-              type="email"
-              className="input-box"
-              {...register("email", { required: true })}
-            />
-          </div>
+        <div className="input-group">
+          <label className="input-label" htmlFor="emailOrUsername">
+            Email or Username*
+          </label>
+          <input
+            id="emailOrUsername"
+            type="text"
+            className="input-box"
+            value={emailOrUsername}
+            onChange={(e) => setEmailOrUsername(e.target.value)}
+          />
+        </div>
 
-          <div className="input-group">
-            <label className="input-label" htmlFor="password">
-              Password*
-            </label>
-            <input
-              id="password"
-              type="password"
-              className="input-box"
-              {...register("password", { required: true })}
-            />
-          </div>
+        <div className="input-group">
+          <label className="input-label" htmlFor="password">
+            Password*
+          </label>
+          <input
+            id="password"
+            type="password"
+            className="input-box"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
 
-          <div className="cta">
-            <button type="submit" className="cta-btn" disabled={loading}>
-              {loading ? "Logging In..." : "Log In"}
-            </button>
-          </div>
+        {error && (
+          <p style={{ color: "red", marginBottom: "15px" }}>
+            {error}
+          </p>
+        )}
 
-          <div className="footer-text">
-            Or
-            <br />
-            <Link href="/signup">
-              <span>Sign Up</span>
-            </Link>{" "}
-            to create an account
-          </div>
-        </form>
+        <div className="cta">
+          <button
+            type="button"
+            className="cta-btn"
+            onClick={handleSignIn}
+            disabled={loading}
+          >
+            {loading ? "Signing In..." : "Sign In"}
+          </button>
+        </div>
+
+        <div className="footer-text">
+          Don’t have an account?
+          <br />
+          <Link href="/signup">
+            <span>Sign Up</span>
+          </Link>
+        </div>
       </div>
     </main>
   );

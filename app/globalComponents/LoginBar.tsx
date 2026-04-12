@@ -1,39 +1,60 @@
-'use client'
+"use client";
 
-import { useCookies } from 'react-cookie';
+import Link from "next/link";
+import { useCookies } from "react-cookie";
+import { useEffect, useState } from "react";
 
 export default function LoginBar() {
-  const [ cookies, __, removeCookie ] = useCookies();
+  const [cookies, , removeCookie] = useCookies(["email"]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const hasUsername = cookies.email;
-
-  const submitLogout = async () => {
-    try {
-        removeCookie("email");
-        return { success: true };
-    } catch (error) {
-        return { success: false, error: "Logout failure." };
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const loggedIn = localStorage.getItem("isLoggedIn") === "true";
+      setIsLoggedIn(loggedIn);
     }
+  }, []);
+
+  const hasAccountAccess = Boolean(cookies.email) && isLoggedIn;
+
+  const submitLogout = () => {
+    removeCookie("email", { path: "/" });
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("loggedInUsername");
+    localStorage.removeItem("loggedInEmail");
+    window.location.href = "/signin";
   };
 
   return (
     <div className="top-bar">
-      <span>
-        <a href="/" className="logo">LiveLink Events</a>
-      </span>
-      <span>
-        <button className="auth-btn">
-          <a href={hasUsername ? "/account" : "/login"}>
-            {hasUsername ? "Account" : "Sign Up / Log In"}
-          </a>
-        </button>
-        {
-          hasUsername ?
-            <button className="auth-btn" onClick={submitLogout}>Logout</button>
-          :
-          <></>
-        }
-      </span>
+      <Link href="/" className="logo">
+        LiveLink Events
+      </Link>
+
+      <div
+        style={{
+          marginLeft: "auto",
+          display: "flex",
+          gap: "10px",
+          alignItems: "center",
+        }}
+      >
+        <Link
+          href={hasAccountAccess ? "/account/customer" : "/signin"}
+          className="avatar-hover"
+        >
+          <span className="avatar-circle">👤</span>
+          <span className="avatar-label">
+            {hasAccountAccess ? "Account" : "Sign Up / Sign In"}
+          </span>
+        </Link>
+
+        {hasAccountAccess && (
+          <button type="button" className="auth-btn" onClick={submitLogout}>
+            Logout
+          </button>
+        )}
+      </div>
     </div>
   );
 }
