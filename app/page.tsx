@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 import { searchArtists, searchStates, searchDates } from '@/app/actions';
@@ -26,9 +25,12 @@ export default function Home() {
   const { register, handleSubmit } = useForm<any>();
   const [results, setResults] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
+  const [hasSearched, setHasSearched] = useState(false);
 
   const onArtistSubmit: SubmitHandler<ArtistFormData> = async (data) => {
     setLoading(true);
+    setHasSearched(true);
+
     const fd = new FormData();
     fd.append("artist", data.artist);
 
@@ -39,6 +41,8 @@ export default function Home() {
 
   const onStateSubmit: SubmitHandler<StateFormData> = async (data) => {
     setLoading(true);
+    setHasSearched(true);
+
     const fd = new FormData();
     fd.append("state", data.state);
 
@@ -49,6 +53,8 @@ export default function Home() {
 
   const onDateSubmit: SubmitHandler<DateFormData> = async (data) => {
     setLoading(true);
+    setHasSearched(true);
+
     const fd = new FormData();
     fd.append("date", data.date);
 
@@ -59,7 +65,6 @@ export default function Home() {
 
   return (
     <main>
-      {/* ✅ YOUR HEADER */}
       <div className="top-bar">
         <Link href="/" className="logo">
           LiveLink Events
@@ -71,7 +76,6 @@ export default function Home() {
         </Link>
       </div>
 
-      {/* ✅ YOUR HERO TEXT */}
       <h1 id="tagline">
         YOUR NEXT CONCERT EXPERIENCE
         <br />
@@ -80,11 +84,11 @@ export default function Home() {
 
       <h2 id="search">Search by:</h2>
 
-      {/* ✅ MERGED SEARCH (Deli logic + your UI layout) */}
       <div className="container">
-
         <form onSubmit={handleSubmit(onStateSubmit)} className="search-card">
-          <label><h3>Location</h3></label>
+          <label>
+            <h3>Location</h3>
+          </label>
           <select {...register("state")} className="input-box">
             <option value="">Select a state</option>
             <option value="NJ">New Jersey</option>
@@ -97,7 +101,9 @@ export default function Home() {
         </form>
 
         <form onSubmit={handleSubmit(onDateSubmit)} className="search-card">
-          <label><h3>Date</h3></label>
+          <label>
+            <h3>Date</h3>
+          </label>
           <input type="date" {...register("date")} className="input-box" />
           <button className="babyButton" type="submit">
             {loading ? "..." : ">"}
@@ -105,7 +111,9 @@ export default function Home() {
         </form>
 
         <form onSubmit={handleSubmit(onArtistSubmit)} className="search-card">
-          <label><h3>Artist</h3></label>
+          <label>
+            <h3>Artist</h3>
+          </label>
           <input
             type="text"
             placeholder="Artist"
@@ -116,15 +124,14 @@ export default function Home() {
             {loading ? "..." : ">"}
           </button>
         </form>
-
       </div>
 
-      {/* ✅ RESULTS FROM DELI */}
-      <div id="results">
-        <Results results={results} />
-      </div>
+      {hasSearched && (
+        <div id="results">
+          <Results results={results} />
+        </div>
+      )}
 
-      {/* ✅ YOUR BUTTONS */}
       <div className="action-row">
         <Link href="/events" className="view-events-btn">
           View All Events

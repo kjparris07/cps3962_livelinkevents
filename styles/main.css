@@ -192,8 +192,9 @@ select {
   margin: 34px auto 40px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   gap: 16px;
+  padding-left: 2vw;
 }
 
 .view-events-btn,
