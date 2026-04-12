@@ -8,6 +8,7 @@ import "../../styles/signin.css";
 export default function SignupPage() {
   const router = useRouter();
 
+  const [accountType, setAccountType] = useState("customer");
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -54,21 +55,37 @@ export default function SignupPage() {
     }
 
     const newUser = {
+      accountType,
       fullName,
       email,
       username,
       password,
+      phoneNumber: "",
+      membershipPlan:
+        accountType === "customer" ? "Basic Free Membership" : "Organizer Plan",
+      favoriteGenre: "",
+      favoriteArtist: "",
+      favoriteCity: "",
+      profilePrivate: false,
+      marketingEmails: true,
+      ticketAlerts: true,
+      twoFactorEnabled: false,
     };
 
     localStorage.setItem("livelinkUser", JSON.stringify(newUser));
     localStorage.setItem("isLoggedIn", "true");
     localStorage.setItem("loggedInUsername", username);
     localStorage.setItem("loggedInEmail", email);
+    localStorage.setItem("loggedInRole", accountType);
 
     setSuccessMessage("Account created successfully.");
 
     setTimeout(() => {
-      router.push("/account/customer");
+      if (accountType === "organizer") {
+        router.push("/account/organizer");
+      } else {
+        router.push("/account/customer");
+      }
     }, 1000);
   };
 
@@ -85,8 +102,23 @@ export default function SignupPage() {
         <div className="required-note">* Indicates required field</div>
 
         <div className="input-group">
+          <label className="input-label" htmlFor="accountType">
+            Account Type*
+          </label>
+          <select
+            id="accountType"
+            className="input-box"
+            value={accountType}
+            onChange={(e) => setAccountType(e.target.value)}
+          >
+            <option value="customer">Customer</option>
+            <option value="organizer">Organizer</option>
+          </select>
+        </div>
+
+        <div className="input-group">
           <label className="input-label" htmlFor="fullName">
-            Full Name*
+            {accountType === "organizer" ? "Organizer Name*" : "Full Name*"}
           </label>
           <input
             id="fullName"

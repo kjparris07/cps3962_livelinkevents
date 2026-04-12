@@ -42,9 +42,15 @@ export default function LoginPage() {
     localStorage.setItem("isLoggedIn", "true");
     localStorage.setItem("loggedInUsername", parsedUser.username);
     localStorage.setItem("loggedInEmail", parsedUser.email);
+    localStorage.setItem("loggedInRole", parsedUser.accountType || "customer");
 
     setLoading(false);
-    router.push("/account/customer");
+
+    if (parsedUser.accountType === "organizer") {
+      router.push("/account/organizer");
+    } else {
+      router.push("/account/customer");
+    }
   };
 
   return (
