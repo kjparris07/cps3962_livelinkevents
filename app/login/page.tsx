@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import "../../styles/signin.css";
 
-export default function SignInPage() {
+export default function LoginPage() {
   const router = useRouter();
 
   const [emailOrUsername, setEmailOrUsername] = useState("");
@@ -13,7 +13,7 @@ export default function SignInPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSignIn = () => {
+  const handleLogin = () => {
     setError("");
     setLoading(true);
 
@@ -39,14 +39,11 @@ export default function SignInPage() {
       return;
     }
 
-    // ✅ SAVE LOGIN STATE
     localStorage.setItem("isLoggedIn", "true");
     localStorage.setItem("loggedInUsername", parsedUser.username);
     localStorage.setItem("loggedInEmail", parsedUser.email);
 
     setLoading(false);
-
-    // ✅ REDIRECT AFTER LOGIN
     router.push("/account/customer");
   };
 
@@ -89,16 +86,14 @@ export default function SignInPage() {
         </div>
 
         {error && (
-          <p style={{ color: "red", marginBottom: "15px" }}>
-            {error}
-          </p>
+          <p style={{ color: "red", marginBottom: "15px" }}>{error}</p>
         )}
 
         <div className="cta">
           <button
             type="button"
             className="cta-btn"
-            onClick={handleSignIn}
+            onClick={handleLogin}
             disabled={loading}
           >
             {loading ? "Signing In..." : "Sign In"}

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import "../../../../styles/main.css";
-import "../../../../styles/login.css";
+import "../../../../styles/signin.css";
 
 export default function EditOrganizer() {
   return (

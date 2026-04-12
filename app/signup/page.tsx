@@ -5,46 +5,71 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import "../../styles/signin.css";
 
-export default function LoginPage() {
+export default function SignupPage() {
   const router = useRouter();
 
-  const [emailOrUsername, setEmailOrUsername] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
 
-  const handleLogin = () => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const usernameRegex = /^[a-zA-Z0-9_]{3,15}$/;
+  const passwordRegex = /^(?=.*\d)(?=.*[^A-Za-z0-9]).{6,}$/;
+
+  const handleSubmit = () => {
     setError("");
-    setLoading(true);
+    setSuccessMessage("");
 
-    const savedUser = localStorage.getItem("livelinkUser");
-
-    if (!savedUser) {
-      setError("No account found. Please sign up first.");
-      setLoading(false);
+    if (!fullName.trim()) {
+      setError("Full name is required.");
       return;
     }
 
-    const parsedUser = JSON.parse(savedUser);
-
-    const matchesUser =
-      emailOrUsername === parsedUser.email ||
-      emailOrUsername === parsedUser.username;
-
-    const matchesPassword = password === parsedUser.password;
-
-    if (!matchesUser || !matchesPassword) {
-      setError("Invalid email/username or password.");
-      setLoading(false);
+    if (!emailRegex.test(email)) {
+      setError("Please enter a valid email address.");
       return;
     }
 
+    if (!usernameRegex.test(username)) {
+      setError(
+        "Username must be 3 to 15 characters and can only use letters, numbers, or underscores."
+      );
+      return;
+    }
+
+    if (!passwordRegex.test(password)) {
+      setError(
+        "Password must be at least 6 characters and include at least one number and one symbol."
+      );
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+
+    const newUser = {
+      fullName,
+      email,
+      username,
+      password,
+    };
+
+    localStorage.setItem("livelinkUser", JSON.stringify(newUser));
     localStorage.setItem("isLoggedIn", "true");
-    localStorage.setItem("loggedInUsername", parsedUser.username);
-    localStorage.setItem("loggedInEmail", parsedUser.email);
+    localStorage.setItem("loggedInUsername", username);
+    localStorage.setItem("loggedInEmail", email);
 
-    setLoading(false);
-    router.push("/account/customer");
+    setSuccessMessage("Account created successfully.");
+
+    setTimeout(() => {
+      router.push("/account/customer");
+    }, 1000);
   };
 
   return (
@@ -56,19 +81,45 @@ export default function LoginPage() {
           </Link>
         </div>
 
-        <div className="signin-title">LOG IN</div>
+        <div className="signin-title">SIGN UP</div>
         <div className="required-note">* Indicates required field</div>
 
         <div className="input-group">
-          <label className="input-label" htmlFor="emailOrUsername">
-            Email or Username*
+          <label className="input-label" htmlFor="fullName">
+            Full Name*
           </label>
           <input
-            id="emailOrUsername"
+            id="fullName"
             type="text"
             className="input-box"
-            value={emailOrUsername}
-            onChange={(e) => setEmailOrUsername(e.target.value)}
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
+          />
+        </div>
+
+        <div className="input-group">
+          <label className="input-label" htmlFor="email">
+            Email*
+          </label>
+          <input
+            id="email"
+            type="email"
+            className="input-box"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+
+        <div className="input-group">
+          <label className="input-label" htmlFor="username">
+            Username*
+          </label>
+          <input
+            id="username"
+            type="text"
+            className="input-box"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
           />
         </div>
 
@@ -85,25 +136,41 @@ export default function LoginPage() {
           />
         </div>
 
+        <div className="input-group">
+          <label className="input-label" htmlFor="confirmPassword">
+            Confirm Password*
+          </label>
+          <input
+            id="confirmPassword"
+            type="password"
+            className="input-box"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+        </div>
+
         {error && (
-          <p style={{ color: "red", marginBottom: "15px" }}>
-            {error}
+          <p style={{ color: "red", marginBottom: "15px" }}>{error}</p>
+        )}
+
+        {successMessage && (
+          <p style={{ color: "green", marginBottom: "15px" }}>
+            {successMessage}
           </p>
         )}
 
         <div className="cta">
-          <button type="button" className="cta-btn" onClick={handleLogin} disabled={loading}>
-            {loading ? "Logging In..." : "Log In"}
+          <button type="button" className="cta-btn" onClick={handleSubmit}>
+            Create Account
           </button>
         </div>
 
         <div className="footer-text">
-          Or
+          Already have an account?
           <br />
-          <Link href="/signup">
-            <span>Sign Up</span>
-          </Link>{" "}
-          to create an account
+          <Link href="/login">
+            <span>Sign In</span>
+          </Link>
         </div>
       </div>
     </main>
