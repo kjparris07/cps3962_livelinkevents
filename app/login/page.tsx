@@ -1,3 +1,4 @@
+import Link from "next/link";
 import "../../styles/login.css";
 
 export default function LoginPage() {
@@ -5,20 +6,27 @@ export default function LoginPage() {
     <main className="login-page">
       <div className="login-container">
         <div className="top-bar">
-          <div className="logo">LiveLink Events</div>
-        </div>
+<Link href="/">
+  <div className="logo">LiveLink Events</div>
+</Link>        
+
+</div>
 
         <div className="login-title">LOG IN</div>
         <div className="required-note">* Indicates required field</div>
 
         <div className="input-group">
-          <div className="input-label">Username*</div>
-          <input type="text" className="input-box" />
+          <label className="input-label" htmlFor="username">
+            Username*
+          </label>
+          <input id="username" type="text" className="input-box" />
         </div>
 
         <div className="input-group">
-          <div className="input-label">Password*</div>
-          <input type="password" className="input-box" />
+          <label className="input-label" htmlFor="password">
+            Password*
+          </label>
+          <input id="password" type="password" className="input-box" />
         </div>
 
         <div className="cta">
@@ -28,7 +36,10 @@ export default function LoginPage() {
         <div className="footer-text">
           Or
           <br />
-          <span>Sign In</span> to create an account
+          <Link href="/signup">
+            <span>Sign Up</span>
+          </Link>{" "}
+          to create an account
         </div>
       </div>
     </main>
