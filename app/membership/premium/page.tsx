@@ -1,0 +1,81 @@
+"use client";
+
+import "@/styles/membershipPages.css";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { membershipPlans} from "@/lib/memberships";
+
+export default function PremiumMembershipPage() {
+  const router = useRouter();
+
+  // Simulated login check
+  const isLoggedIn = true; // Replace with real auth later
+
+  if (!isLoggedIn) {
+    router.push("/login?plan=premium");
+    return null;
+  }
+
+  const plan = membershipPlans.premium;
+  const [name, setName] = useState("");
+  const [card, setCard] = useState("");
+  const [expiry, setExpiry] = useState("");
+  const [cvc, setCvc] = useState("");
+
+  function handlePayment(e) {
+    e.preventDefault();
+
+    setTimeout(() => {
+      router.push("/membership/confirmation?plan=premium");
+    }, 800);
+  }
+
+   return (
+    <main className="membership-checkout-page">
+        <form onSubmit={handlePayment}>
+          <div className="membership-title">Premium Membership Payment ($9.99) </div>
+          <div className="membership-required-note">* Indicates required field</div>
+
+          <div className="membership-container">
+
+            <div className="input-group">
+              <div className="input-label">Name on Card*</div>
+              <input type="text" className="input-box" placeholder="Enter Name"value={name} onChange={(e) => setName(e.target.value)} required/>
+            </div>
+
+            <div className="input-group">
+              <div className="input-label">Card Number*</div>
+              <input type="text" className="input-box" placeholder="1234..." value={card} onChange={(e) => setCard(e.target.value)} required/>
+            </div>
+
+            <div className="input-group">
+              <div className="input-label">Expiration date*</div>
+              <input type="text" className="input-box" placeholder="MM/YY" maxLength={5} value={expiry} onChange={(e) => { let val = e.target.value;
+
+                  // Auto‑format MM/YY
+                  if (val.length === 2 && expiry.length === 1) {
+                    val = val + "/";
+                  }
+
+                  val = val.replace(/[^0-9/]/g, "");
+                  setExpiry(val);
+                }}
+                required/>
+            </div>
+
+            <div className="input-group">
+              <div className="input-label">Security code*</div>
+              <input type="password" className="input-box" value={cvc} onChange={(e) => setCvc(e.target.value)} placeholder="CVC"
+                required/>
+            </div>
+          </div>
+
+          <div className="cta">
+            <button className="cta-btn" type="submit">
+              Continue
+            </button>
+          </div>
+        </form>
+    </main>
+  );
+}

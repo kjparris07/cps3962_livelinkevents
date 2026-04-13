@@ -54,8 +54,7 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="signin-page">
-      <div className="signin-container">
+    <main className="signin-container">
         <div className="top-bar">
           <Link href="/" className="logo">
             LiveLink Events
@@ -75,6 +74,7 @@ export default function LoginPage() {
             className="input-box"
             value={emailOrUsername}
             onChange={(e) => setEmailOrUsername(e.target.value)}
+            placeholder="Enter your email or username"
           />
         </div>
 
@@ -88,6 +88,7 @@ export default function LoginPage() {
             className="input-box"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            placeholder="Enter your password"
           />
         </div>
 
@@ -113,7 +114,7 @@ export default function LoginPage() {
             <span>Sign Up</span>
           </Link>
         </div>
-      </div>
+      
     </main>
   );
 }

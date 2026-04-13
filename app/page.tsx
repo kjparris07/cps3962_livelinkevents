@@ -54,7 +54,6 @@ export default function Home() {
         <br />
         STARTS HERE...
       </h1>
-
       <h2 id="search">Search by:</h2>
 
       <div className="container">
