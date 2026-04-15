@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useCookies } from "react-cookie";
 
 export default function LoginBar() {
-  const [cookies, , removeCookie] = useCookies(["email"]);
+  const [cookies, , removeCookie] = useCookies();
 
   const isLoggedIn = cookies.email
 

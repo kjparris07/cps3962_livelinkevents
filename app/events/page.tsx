@@ -1,9 +1,10 @@
 import Link from "next/link";
-import "../../styles/main.css";
-import "../../styles/events.css";
 import { Results } from "../globalComponents/Results";
 
-export default async function EventsPage() {
+import "@/styles/main.css";
+import "@/styles/events.css";
+
+export default async function Events() {
   let results = await Results("all", new FormData);
   return (
     <main>
