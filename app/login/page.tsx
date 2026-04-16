@@ -4,95 +4,80 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useCookies } from 'react-cookie';
 import { useRouter } from 'next/navigation';
+import { logIn } from '../actions';
 
 import "@/styles/signin.css";
 
 type SignInFormData = {
   email: string;
   password: string;
+  account_type: "customer" | "organizer";
 };
 
 export default function LoginPage() {
   const router = useRouter();
-  const [_, setCookie] = useCookies(['email']);
+  const [ _, setCookie ] = useCookies();
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
   const { register, handleSubmit } = useForm<SignInFormData>();
-
+  
   const onSubmit = async (data: SignInFormData) => {
     setLoading(true);
-    setError("");
+    const fd = new FormData();
 
-    try {
-      const res = await fetch("/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
-      const text = await res.text();
-      console.log("RAW RESPONSE:", text);
-
-      let result;
-      try {
-        result = JSON.parse(text);
-      } catch {
-        throw new Error("Server did not return JSON. Check /api/login route.");
+    Object.entries(data).forEach(([key, value]) => {
+      if (value !== undefined && value !== null) {
+        fd.append(key, value.toString());
       }
+    });
 
-    if (result.success) {
-      setCookie("email", data.email, {path: "/"});
-      if (result.account_type == 'customer') {
-        router.push("/account/customer");
-      } else {
-        router.push("/account/organizer");
-      }
-    } else {
-      console.error(result)
-    }
-    setLoading(false);
+  const result = await logIn(fd);
+  if (result.success) {
+    setCookie("email", data.email, { path: "/"});
+    setCookie("accountType", data.account_type, { path: "/"});
+    router.push('/account');
+  }
+  setLoading(false);
   };
 
   return (
     <main className="login-page">
       <form className="login-container" onSubmit={handleSubmit(onSubmit)}>
+
         <div className="login-title">LOG IN</div>
         <div className="required-note">* Indicates required field</div>
 
         <div className="input-group">
+          <label className="input-label">Account Type:</label>
+          <select className="input-box" {...register("account_type", {required: true})}>
+            <option value="customer">Customer</option>
+            <option value="organizer">Organizer</option>
+          </select>
+
+        </div>
+
+        <div className="input-group">
           <div className="input-label">Email*</div>
-          <input
-            type="text"
-            className="input-box"
-            {...register("email", { required: true })}
-          />
+          <input type="text" className="input-box" {...register("email", {required: true})}/>
         </div>
 
         <div className="input-group">
           <div className="input-label">Password*</div>
-          <input
-            type="password"
-            className="input-box"
-            {...register("password", { required: true })}
-          />
+          <input type="password" className="input-box" {...register("password", {required: true})}/>
         </div>
 
         <div className="cta">
-          <button type="submit" className="cta-btn" disabled={loading}>
-            {loading ? "Logging In..." : "Log In"}
+          <button className="cta-btn" disabled={ loading }>
+            { loading ? 'Logging In...' : 'Log In' }
           </button>
         </div>
 
-        {error && <div className="required-note">{error}</div>}
-
         <div className="footer-text">
-          Or{" "}
+          Or
+          <br />
           <a href="/signup" className="footer-link">
             Sign Up
           </a>
-          {" "}to create an account
+          to create an account
         </div>
       </form>
     </main>
