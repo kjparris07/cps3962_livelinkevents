@@ -3,7 +3,14 @@ import { NextResponse } from 'next/server';
 export async function PATCH(req: Request) {
   try {
     const body = await req.json();
-    const { email, fullName, username, phoneNumber, favoriteGenre } = body;
+    const {
+      email,
+      companyName,
+      contactName,
+      phoneNumber,
+      organizationType,
+      musicCategory,
+    } = body;
 
     if (!email) {
       return NextResponse.json(
@@ -14,19 +21,20 @@ export async function PATCH(req: Request) {
 
     return NextResponse.json({
       success: true,
-      message: 'Customer account updated.',
+      message: 'Organizer account updated.',
       updatedUser: {
         email,
-        fullName,
-        username,
+        companyName,
+        contactName,
         phoneNumber,
-        favoriteGenre,
+        organizationType,
+        musicCategory,
       },
     });
   } catch (error) {
     console.error(error);
     return NextResponse.json(
-      { success: false, message: 'Server error updating customer account.' },
+      { success: false, message: 'Server error updating organizer account.' },
       { status: 500 }
     );
   }
