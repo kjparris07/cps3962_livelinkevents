@@ -55,7 +55,7 @@ export default function EventsPage() {
   });
 
   if (!events) {
-    return <h3>Finding events...</h3>;
+    return <h3 className="search-title">Finding events...</h3>;
   }
 
  return (

@@ -74,7 +74,7 @@ export default function LoginPage() {
           <a href="/signup" className="footer-link">
             Sign Up
           </a>
-          to create an account
+        to create an account
         </div>
       </form>
     </main>
