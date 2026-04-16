@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
+import { useRouter } from "next/navigation";
 import { getAccountInfo, setOrganizer, getOrganizerEvents } from "@/app/actions";
 import { OrganizerDBInfo } from "@/app/globalComponents/OrganizerDBInfo";
 import "@/styles/main.css";
@@ -15,6 +16,7 @@ export default function OrganizerAccountPage() {
   const [organizer, setOrganizerData] = useState<OrganizerDBInfo | null>(null);
   const [events, setEvents] = useState<any[] | null>(null);
   const [loading, setLoading] = useState(true);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     const fetchInfo = async () => {
@@ -38,9 +40,11 @@ export default function OrganizerAccountPage() {
               setEvents([<p key='no-results'>No events found. Try creating one!</p>]);
             }
           }
-        } 
+        } else {
+          setMessage("Could not fetch from database.");
+        }
       } catch (err) {
-        console.error("Fetch error:", err);
+        setMessage(`Fetch error: ${err}`);
       }
     }
     setLoading(false);
@@ -51,7 +55,7 @@ export default function OrganizerAccountPage() {
 
   if (loading) return <div className="account-page">Loading...</div>;
   
-  if (!organizer) return <div className="account-page">No account info found.</div>;
+  if (!organizer) {return <div className="account-page">No account info found.</div>;}
 
   return (
     <main className="account-page">
@@ -62,6 +66,7 @@ export default function OrganizerAccountPage() {
           <h1 className="account-title-main">
             Welcome back{organizer.name ? `, ${organizer.name}` : ""}!
           </h1>
+          <p>{ message ?? ""}</p>
           <p className="account-description">
             Manage your artist or company profile, event listings, media, sales,
             and organizer settings.
@@ -75,7 +80,7 @@ export default function OrganizerAccountPage() {
               <strong>Name:</strong> {organizer.name || "Not added"}
             </p>
             <p>
-              <strong>Email:</strong> {organizer.email || "Not added"}
+              <strong>Email:</strong> {organizer?.email || "Not added"}
             </p>
             <p>
               <strong>Business Phone:</strong> {organizer.phone || "Not added"}
@@ -101,7 +106,9 @@ export default function OrganizerAccountPage() {
             </p>
 
             <div className="account-card-actions">
-              <button className="account-primary-btn">Update Payout Info</button>
+              <button className="account-primary-btn" type="button">
+                Update Payout Info
+              </button>
             </div>
           </div>
 
@@ -114,15 +121,19 @@ export default function OrganizerAccountPage() {
             </p>
 
             <div className="account-card-actions stacked-actions">
-              <button className="account-primary-btn">Create New Event</button>
-              <button className="account-secondary-btn">Manage Events</button>
+              <button className="account-primary-btn" type="button">
+                Create New Event
+              </button>
+              <button className="account-secondary-btn" type="button">
+                Manage Events
+              </button>
             </div>
           </div>
 
           <div className="account-card">
             <h2>Artist / Brand Media</h2>
             <p>
-              <strong>Website:</strong> {organizer.website}
+              <strong>Website:</strong> {organizer?.website || "Not added"}
             </p>
             <p>
               <strong>Instagram:</strong> {organizer.instagram}
@@ -132,8 +143,12 @@ export default function OrganizerAccountPage() {
             </p>
 
             <div className="account-card-actions stacked-actions">
-              <button className="account-primary-btn">Upload Promo Media</button>
-              <button className="account-secondary-btn">Edit Artist Info</button>
+              <button className="account-primary-btn" type="button">
+                Upload Promo Media
+              </button>
+              <button className="account-secondary-btn" type="button">
+                Edit Artist Info
+              </button>
             </div>
           </div>
 
@@ -146,11 +161,13 @@ export default function OrganizerAccountPage() {
               <strong>Top Performing City:</strong> Newark, NJ
             </p>
             <p>
-              <strong>Most Interested Audience Genre:</strong> Pop / R&B
+              <strong>Most Interested Audience Genre:</strong> Pop / R&amp;B
             </p>
 
             <div className="account-card-actions">
-              <button className="account-primary-btn">View Sales Details</button>
+              <button className="account-primary-btn" type="button">
+                View Sales Details
+              </button>
             </div>
           </div>
 
