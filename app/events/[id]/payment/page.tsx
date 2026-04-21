@@ -23,7 +23,7 @@ export default function TicketPaymentPage({params}:PageProps) {
   const [message, setMessage] = useState("");
   const [mounted, setMounted] = useState(false);
   const {id} = React.use(params);
-  const { handleSubmit } = useForm();
+  const { handleSubmit, register } = useForm();
   const router = useRouter();
 
   useEffect(() => {
@@ -58,10 +58,10 @@ export default function TicketPaymentPage({params}:PageProps) {
     fetchEvent();
   }, []);
 
-  const onSubmit = async () => {
+  const onSubmit = async (data:any) => {
     try {
       if (isLoggedIn && event){
-        const purchase = await purchaseTicket(cookies.email, event.event_id);
+        const purchase = await purchaseTicket(cookies.email, event.event_id, data.tier.toString() || "");
         if (purchase.success) {
           router.push(`/events/${event.event_id}/confirmation`);
         } else {
@@ -84,6 +84,16 @@ export default function TicketPaymentPage({params}:PageProps) {
     );
   }
 
+  if (message.toString() === "No more tickets") {
+    return (
+      <div>
+        <h1>Sorry! This event is sold out!</h1>
+        <Link href={"/events"}>View Other Events</Link>
+      </div>
+      
+    );
+  }
+
   return (
     <main className="payment-container ">
 
@@ -97,9 +107,9 @@ export default function TicketPaymentPage({params}:PageProps) {
         <form className="payment-form" onSubmit={handleSubmit(onSubmit)}>
           <label className="field-label">
             Ticket Option
-            <select name="ticket" className="input-box">
+            <select className="input-box" {...register("tier", {required: true})}>
               {event.tickets.map((option) => (
-              <option key={option.tier} className="ticketType" value={option.price} >
+              <option key={option.tier} className="ticketType" value={option.tier} disabled={option.quantity < 1} >
                 {option.tier == "1" ? "Basic" : option.tier == "2" ? "Premium" : "Elite"} – ${option.quantity > 0 ? option.price : "SOLD OUT"}
               </option>
             ))}

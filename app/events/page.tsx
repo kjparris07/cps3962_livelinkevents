@@ -91,9 +91,23 @@ export default function EventsPage() {
                 <strong>Starting at:</strong> ${event.tickets[0].price}
               </p>
 
-              <Link href={`/events/${event.event_id}`} className="view-events-btn">
-                View Tickets
-              </Link>
+              <button
+              className="view-events-btn"
+              disabled={event.tickets[0].quantity === 0 
+                && event.tickets[1]?.quantity === 0 
+                && event.tickets[2]?.quantity === 0}
+              >
+                <a 
+                href={`/events/${event.tickets[0].quantity === 0 
+                && event.tickets[1]?.quantity === 0 
+                && event.tickets[2]?.quantity === 0 
+                ? "" : event.event_id}`}>
+                  {event.tickets[0].quantity === 0 
+                  && event.tickets[1]?.quantity === 0 
+                  && event.tickets[2]?.quantity === 0 
+                  ? "Sold Out!" : "View Tickets"}
+                </a>  
+              </button>
             </div>
 
             <div className="event-right">

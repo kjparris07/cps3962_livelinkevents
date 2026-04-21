@@ -1,6 +1,7 @@
 'use server'
-import { query } from '@/lib/db';
+import { query, withTableLock } from '@/lib/db';
 import { Ticket } from './globalComponents/Ticket';
+
 import bcrypt from 'bcryptjs';
 
 export async function hashPassword(password: string): Promise<string> {
@@ -338,7 +339,7 @@ export async function getOrganizerId(email : string) {
     }
 }
 
-export async function purchaseTicket(email: string, event_id:string) {
+export async function purchaseTicket(email: string, event_id:string, tier: string) {
     try {
         const customer = (await query(
             `SELECT id
@@ -348,13 +349,55 @@ export async function purchaseTicket(email: string, event_id:string) {
         if (customer.length > 1) throw Error("More than one customer account found.")
         if (customer.length < 1) throw Error("No customer account found.")
         const customer_id = customer[0].id;
-        
-        await query(
-            `INSERT INTO customer_events
-            VALUES ($1, $2)`, [`${customer_id}`, `${event_id}`]
-        );
 
-        return {success: true};
+        const pricesRes = (await query(
+            `SELECT prices
+            FROM events
+            WHERE event_id=$1`, [`${event_id}`]
+        )).rows[0];
+
+        if (pricesRes.length > 1) throw Error("More than one event found.")
+        if (pricesRes.length < 1) throw Error("No event found.")
+
+        const rawDbString = pricesRes.prices;
+
+        const ticketRegex = /\(\\\"\((\d+),([\d.]+)\)\\\",(\d+)\)/g;
+
+        const tickets: Ticket[] = [];
+        let match;
+
+        while ((match = ticketRegex.exec(rawDbString)) !== null) {
+          tickets.push({
+            tier: match[1], 
+            price: parseFloat(match[2]),
+            quantity: parseInt(match[3], 10),
+          });
+        }
+
+        tickets[parseInt(tier)-1].quantity -= 1;
+
+        if (tickets[parseInt(tier)-1].quantity > 0){    
+            const ticketStr = tickets.map((t:Ticket) => {
+                return `"(\\"(${t.tier},${t.price})\\", ${t.quantity})"`;
+            }).join(",");
+
+            await withTableLock('events', async (client) => {
+                await client.query({
+                    name: 'update-tickets',
+                    text: 'UPDATE events SET prices=$1',
+                    values: [`{${ticketStr}}`],
+                });
+            });
+
+            await query(
+                `INSERT INTO customer_events
+                VALUES ($1, $2)`, [`${customer_id}`, `${event_id}`]
+            );
+
+            return {success: true};
+        } else {
+            return {success: false, error: "No more tickets"};
+        }
     } catch (error) {
         return {success: false, error: error};
     }

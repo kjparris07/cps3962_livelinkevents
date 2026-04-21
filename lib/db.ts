@@ -1,4 +1,4 @@
-import { Pool } from 'pg';
+import { Pool, PoolClient } from 'pg';
 
 const caCert = process.env.DB_CA ? process.env.DB_CA.replace(/\\n/g, '\n') : undefined;
 
@@ -18,3 +18,22 @@ const pool = new Pool({
 });
 
 export const query = (text: string, params?: any[]) => pool.query(text, params);
+
+export async function withTableLock<T>(
+  table: string,
+  fn: (client: PoolClient) => Promise<T>
+): Promise<T> {
+  const client = await pool.connect();
+  try {
+    await client.query('BEGIN');
+    await client.query(`LOCK TABLE ${table}`);
+    const result = await fn(client);
+    await client.query('COMMIT');
+    return result;
+  } catch (err) {
+    await client.query('ROLLBACK');
+    throw err;
+  } finally {
+    client.release();
+  }
+}
